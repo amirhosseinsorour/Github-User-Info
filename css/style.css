@@ -50,10 +50,9 @@ body{
     flex-direction: row;
 }
 
-.photo {
+.photo{
     width: 50%;
     height: auto;
-    /* margin-left: 20px; */
     border-radius: 50%;
 }
 
@@ -88,8 +87,6 @@ body{
     font-family: Segoe Print;
     background-color: #0c2238;
     text-decoration: none;
-    /* text-transform: uppercase; */
-    /* width: 10px; */
     padding: 3px 8px;
     margin: 5px 0px; 
     border: 1px solid white;
