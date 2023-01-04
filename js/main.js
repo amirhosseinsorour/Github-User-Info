@@ -33,12 +33,15 @@ function submitURL(event){
       bio.innerHTML = "";
     }
 
-    function saveElement(item){
-      localStorage.setItem(urlInput.value, item);
+    function saveElement(item, username){
+      localStorage.setItem(username, JSON.stringify(item));
+      console.log(username);
+      console.log(item);
     }
 
     function fetchData(){
-      fetch(baseApi + urlInput.value)
+      const username = urlInput.value; 
+      fetch(baseApi + username)
       .then((response) => response.json())
       .then((data) => {
   
@@ -52,7 +55,7 @@ function submitURL(event){
             bio : data.bio,
           }
           setElements(item);
-          saveElement(item);
+          saveElement(item, username);
         } else{
           console.log("ERROR!");
           resetPage();
@@ -61,8 +64,9 @@ function submitURL(event){
     }
 
     const savedItem = localStorage.getItem(urlInput.value);
+    console.log(savedItem);
     if (savedItem){
-      setElements(savedItem);
+      setElements(JSON.parse(savedItem));
     } else{
       fetchData();
     }
