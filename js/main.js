@@ -14,28 +14,58 @@ function submitURL(event){
     const location = document.getElementById("location");
     const bio = document.getElementById("bio");
 
-fetch(baseApi + urlInput.value)
-  .then((response) => response.json())
-  .then((data) => {
-    if(data.name){
-        console.log(data);
-        avatar.src = "./assets/avatar.png";
-        avatar.src = data.avatar_url;
-        fullName.innerHTML = data.name;
-        blog.href = data.blog;
-        blog.innerHTML = "Link to Blog";
-        location.innerHTML = data.location;
-        bio.innerHTML = data.bio;
-    } else{
-        console.log("ERROR");
-        avatar.src = "./assets/avatar.png";
-        fullName.innerHTML = "No User Found!";
-        blog.href = "";
-        blog.innerHTML = "";
-        location.innerHTML = "";
-        bio.innerHTML = "";
+    function setElements(item){
+      avatar.src = "./assets/avatar.png";
+      avatar.src = item.avatar_url;
+      fullName.innerHTML = item.name;
+      blog.href = item.blog;
+      blog.innerHTML = "Link to Blog";
+      location.innerHTML = item.location;
+      bio.innerHTML = item.bio;
     }
-  });
+
+    function resetPage(){
+      avatar.src = "./assets/avatar.png";
+      fullName.innerHTML = "No User Found!";
+      blog.href = "";
+      blog.innerHTML = "";
+      location.innerHTML = "";
+      bio.innerHTML = "";
+    }
+
+    function saveElement(item){
+      localStorage.setItem(urlInput.value, item);
+    }
+
+    function fetchData(){
+      fetch(baseApi + urlInput.value)
+      .then((response) => response.json())
+      .then((data) => {
+  
+        if(data.name){
+          console.log(data);
+          const item = {
+            avatar_url : data.avatar_url,
+            name : data.name,
+            blog : data.blog,
+            location : data.location,
+            bio : data.bio,
+          }
+          setElements(item);
+          saveElement(item);
+        } else{
+          console.log("ERROR!");
+          resetPage();
+        }
+      });
+    }
+
+    const savedItem = localStorage.getItem(urlInput.value);
+    if (savedItem){
+      setElements(savedItem);
+    } else{
+      fetchData();
+    }
 
     urlInput.value = "";
 
