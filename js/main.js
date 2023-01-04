@@ -29,7 +29,7 @@ function submitURL(event){
       fullName.innerHTML = "No User Found!";
       blog.href = "";
       blog.innerHTML = "";
-      location.innerHTML = "";
+      location.innerHTML = "Enter Valid GitHub UserName →";
       bio.innerHTML = "";
     }
 
